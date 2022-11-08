@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import Result from "./components/Result/Result";
+import Form from "./components/UI/Form";
 
-function App() {
+function App({ ...props }) {
+  const [isNumClick, setIsNumClick] = useState(false);
+  const [isLineClick, setIsLineClick] = useState(false);
+  const [isNumAdd, setIsNumAdd] = useState([]);
+
+  const numClickHandler = (num) => {
+    // console.log(num);
+    setIsNumClick(true);
+    setIsNumAdd((currentArray) => [...currentArray, num]);
+    console.log(isNumAdd);
+  };
+
+  const lineClickHandler = (num) => {
+    // console.log(num);
+    setIsLineClick(true);
+    setIsNumAdd((currentArray) => [...currentArray, num]);
+    console.log(isNumAdd);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>구구단 계산기 ver3</h2>
+      {isLineClick ? (
+        <Result numArray={isNumAdd} />
+      ) : (
+        <Form
+          onNumClick={isNumClick}
+          onAddNum={numClickHandler}
+          onAddLine={lineClickHandler}
+        />
+      )}
     </div>
   );
 }
